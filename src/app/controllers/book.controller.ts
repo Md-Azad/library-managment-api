@@ -20,3 +20,24 @@ bookRoutes.post("/create-book", async (req: Request, res: Response) => {
     });
   }
 });
+
+bookRoutes.get("/", async (req: Request, res: Response) => {
+  try {
+    const data = await Book.find();
+
+    res.status(200).send({
+      success: true,
+      message: "book created successfully",
+      data,
+    });
+  } catch (error: any) {
+    res.status(400).send({
+      message: "book creation failed",
+      success: false,
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+});
