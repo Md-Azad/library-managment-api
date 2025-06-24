@@ -104,3 +104,25 @@ bookRoutes.patch("/:bookId", async (req: Request, res: Response) => {
     });
   }
 });
+bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
+  try {
+    const bookId = req.params?.bookId;
+
+    const data = await Book.findByIdAndDelete(bookId);
+    console.log(data);
+    res.status(200).send({
+      success: true,
+      message: "book deleted successfully",
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(400).send({
+      message: "book did not found",
+      success: false,
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+});
