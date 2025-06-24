@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Book } from "../models/book.model";
+
 export const bookRoutes = express.Router();
 
 bookRoutes.post("/create-book", async (req: Request, res: Response) => {
@@ -10,6 +11,7 @@ bookRoutes.post("/create-book", async (req: Request, res: Response) => {
       .status(201)
       .send({ success: true, message: "book created successfully", data });
   } catch (error: any) {
+    console.log(error);
     res.status(400).send({
       message: "book creation failed",
       success: false,
@@ -23,11 +25,29 @@ bookRoutes.post("/create-book", async (req: Request, res: Response) => {
 
 bookRoutes.get("/", async (req: Request, res: Response) => {
   try {
-    const data = await Book.find();
+    const { genre, sortBy, sort, limit } = req.query;
+    const searchObject: any = {};
+    if (genre) {
+      searchObject["genre"] = genre;
+    }
+
+    const sortObject: any = {};
+    if (sortBy) {
+      sortObject[sortBy as string] = sort === "asc" ? 1 : -1;
+    }
+
+    let searchLimit: number = 10;
+    if (limit) {
+      searchLimit = Number(limit);
+    }
+
+    const data = await Book.find(searchObject)
+      .sort(sortObject)
+      .limit(searchLimit);
 
     res.status(200).send({
       success: true,
-      message: "book created successfully",
+      message: "book fetched successfully",
       data,
     });
   } catch (error: any) {

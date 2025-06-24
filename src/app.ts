@@ -8,8 +8,8 @@ const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/users", userRoutes);
-app.use("/book", bookRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/books", bookRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("library server is running");
 });
