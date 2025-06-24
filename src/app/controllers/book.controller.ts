@@ -82,3 +82,25 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
     });
   }
 });
+
+bookRoutes.patch("/:bookId", async (req: Request, res: Response) => {
+  try {
+    const bookId = req.params?.bookId;
+
+    const data = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
+    res.status(200).send({
+      success: true,
+      message: "book updated successfully",
+      data,
+    });
+  } catch (error: any) {
+    res.status(400).send({
+      message: "book did not found",
+      success: false,
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+});
