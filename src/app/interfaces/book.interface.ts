@@ -1,3 +1,5 @@
+import { Model, Types } from "mongoose";
+
 export interface IBook {
   title: string;
   author: string;
@@ -14,4 +16,8 @@ export interface IBook {
   avilable: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface BookModelStatic extends Model<IBook> {
+  updateAvilableityMethod(book: Types.ObjectId): boolean;
 }

@@ -7,7 +7,6 @@ export const borrowRoutes = express.Router();
 borrowRoutes.post("/", async (req: Request, res: Response) => {
   try {
     const { book, quantity, dueDate } = req?.body;
-    console.log(quantity, typeof quantity);
 
     const borrowBook = await Book.findById(book);
     if (!borrowBook) {
@@ -41,12 +40,24 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
 
     const data = await Borrow.create(req.body);
 
+    const status = await Book.updateAvilableityMethod(book);
+    if (!status) {
+      await Book.findByIdAndUpdate(
+        book,
+        { avilable: status },
+        {
+          new: true,
+        }
+      );
+    }
+
     res.status(200).send({
       message: "book brrowed successfully",
       success: true,
       data,
     });
   } catch (error: any) {
+    console.log(error);
     res.status(400).send({
       message: "book borrowing failed",
       success: false,

@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
-import { IBook } from "../interfaces/book.interface";
+import { model, Schema, Types } from "mongoose";
+import { BookModelStatic, IBook } from "../interfaces/book.interface";
 
-const bookSchema = new Schema<IBook>(
+const bookSchema = new Schema<IBook, BookModelStatic>(
   {
     title: {
       type: String,
@@ -48,4 +48,17 @@ const bookSchema = new Schema<IBook>(
   }
 );
 
-export const Book = model<IBook>("Book", bookSchema);
+bookSchema.static(
+  "updateAvilableityMethod",
+  async function updateAvilableityMethod(id: Types.ObjectId) {
+    const updated = await Book.findById(id);
+
+    if (updated && updated.copies === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+);
+
+export const Book = model<IBook, BookModelStatic>("Book", bookSchema);
