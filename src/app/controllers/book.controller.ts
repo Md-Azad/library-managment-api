@@ -11,7 +11,6 @@ bookRoutes.post("/", async (req: Request, res: Response) => {
       .status(201)
       .send({ success: true, message: "book created successfully", data });
   } catch (error: any) {
-    console.log(error);
     res.status(400).send({
       message: "book creation failed",
       success: false,
