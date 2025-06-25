@@ -22,8 +22,11 @@ The **Library Management API** is a modern web API server that is built with the
 ## 🌟 Features
 
 ✅ Any user can deposit books for borrowing other users.
+
 ✅ Any user can borrow books until the book are available.
+
 ✅ User can create, get all/single, update and delete books.
+
 ✅ User can filter, sort and limit the books according their need.
 
 ### Features to be implemented:
