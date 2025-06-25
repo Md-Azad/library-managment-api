@@ -35,7 +35,7 @@ const bookSchema = new Schema<IBook>(
     copies: {
       type: Number,
       required: [true, "Copies is a mandatory field."],
-      min: [1, "copies can not a negative or zero"],
+      min: [0, "copies can not a negative or zero"],
     },
     avilable: {
       type: Boolean,

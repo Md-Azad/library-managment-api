@@ -7,6 +7,7 @@ export const borrowRoutes = express.Router();
 borrowRoutes.post("/", async (req: Request, res: Response) => {
   try {
     const { book, quantity, dueDate } = req?.body;
+    console.log(quantity, typeof quantity);
 
     const borrowBook = await Book.findById(book);
     if (!borrowBook) {
@@ -29,7 +30,7 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
       });
       return;
     }
-    if (borrowBook?.copies && quantity > borrowBook?.copies) {
+    if (borrowBook?.copies >= 0 && quantity > borrowBook?.copies) {
       res.status(200).send({
         message: "This much book is not available",
         success: false,
@@ -39,23 +40,6 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
     }
 
     const data = await Borrow.create(req.body);
-    if (data) {
-      try {
-        const newAmoung: Number = borrowBook.copies - quantity;
-        console.log(newAmoung);
-        const updatedBook = await Book.findByIdAndUpdate(
-          book,
-          { copies: newAmoung },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        console.log(updatedBook);
-      } catch (error: any) {
-        throw new Error("Something went wrong.");
-      }
-    }
 
     res.status(200).send({
       message: "book brrowed successfully",

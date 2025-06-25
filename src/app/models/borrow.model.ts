@@ -1,5 +1,6 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 import { IBorrow } from "../interfaces/borrow.interface";
+import { Book } from "./book.model";
 
 const borrowSchema = new Schema<IBorrow>(
   {
@@ -10,7 +11,7 @@ const borrowSchema = new Schema<IBorrow>(
     },
     quantity: {
       type: Number,
-      min: [1, "Quantity can not be less then 0"],
+      min: [0, "Quantity can not be less then 0"],
       required: [true, "Quantity is a mandatory field."],
     },
     dueDate: {
@@ -23,5 +24,17 @@ const borrowSchema = new Schema<IBorrow>(
     versionKey: false,
   }
 );
+
+borrowSchema.post("save", async function (doc) {
+  try {
+    await Book.findByIdAndUpdate(
+      doc.book,
+      { $inc: { copies: -doc.quantity } },
+      { new: true }
+    );
+  } catch (err) {
+    console.error("Failed to update book copies after borrow:", err);
+  }
+});
 
 export const Borrow = model<IBorrow>("Borrow", borrowSchema);
