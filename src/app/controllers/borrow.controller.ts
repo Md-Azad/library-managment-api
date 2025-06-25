@@ -40,15 +40,17 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
 
     const data = await Borrow.create(req.body);
 
-    const status = await Book.updateAvilableityMethod(book);
-    if (!status) {
-      await Book.findByIdAndUpdate(
-        book,
-        { avilable: status },
-        {
-          new: true,
-        }
-      );
+    if (data) {
+      const status = await Book.updateAvilableityMethod(book);
+      if (!status) {
+        await Book.findByIdAndUpdate(
+          book,
+          { avilable: status },
+          {
+            new: true,
+          }
+        );
+      }
     }
 
     res.status(200).send({
