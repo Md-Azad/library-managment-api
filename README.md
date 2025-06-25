@@ -59,8 +59,6 @@ cd library-management-api
 
 2️⃣ Install dependencies:
 
-# Server-side
-
 ```base
 npm install
 npm i ts-node-dev
@@ -81,12 +79,17 @@ npm i ts-node-dev
 
 ## 📦 Dependencies
 
-This project uses the following dependencies:  
- "cors"
-"dotenv"
-"express"
-"mongoose"
-**Dev dependencies**:
+This project uses the following dependencies:
+
+- "cors"
+- "dotenv"
+- "express"
+- "mongoose"
+
+- **Dev dependencies**:
+
 "@types/cors": "^2.8.19",
+
 "@types/express": "^5.0.3",
+
 "ts-node-dev": "^2.0.0"
