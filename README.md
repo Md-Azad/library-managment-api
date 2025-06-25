@@ -28,12 +28,12 @@ The **Library Management API** is a modern web API server that is built with the
 
 ### Features to be implemented:
 
-    -**User account creation**: In future there will be system for creating account.
-    -**Role-based access**: There will be role-based access where the access will be limited according the their role.
-    -**Payment System**: There will be a donation system since this will be totally free for the book readers to borrow books.
-    -**Personal info**: Under personal account user will be able to check their borrowed books,due date, and donation details.
-    -**Notification**: User will get notification about the returing date before the due date.
-    -**Security**: JWT will be used for securing the apis.
+    - **User account creation**: In future there will be system for creating account.
+    - **Role-based access**: There will be role-based access where the access will be limited according the their role.
+    - **Payment System**: There will be a donation system since this will be totally free for the book readers to borrow books.
+    - **Personal info**: Under personal account user will be able to check their borrowed books,due date, and donation details.
+    - **Notification**: User will get notification about the returing date before the due date.
+    - **Security**: JWT will be used for securing the apis.
 
 ---
 
@@ -61,12 +61,23 @@ cd library-management-api
 
 # Server-side
 
+```base
 npm install
 npm i ts-node-dev
+
+```
+
 **Add this line in the script in the package.json file**:
--"dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+
+```base
+    - "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+```
+
 3️⃣ Run the development servers:
-npm run dev
+
+```base
+    npm run dev
+```
 
 ## 📦 Dependencies
 
