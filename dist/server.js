@@ -13,16 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config"));
 function server() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield mongoose_1.default.connect(config_1.default.database_url);
             console.log("Server is connected with the database");
-            app_1.default.listen(config_1.default.port, () => {
-                console.log(`library management server is running on ${config_1.default.port}`);
-            });
         }
         catch (error) {
             console.error(error);
