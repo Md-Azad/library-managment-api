@@ -1,4 +1,7 @@
 "use strict";
+// import mongoose from "mongoose";
+// import config from "./config";
+// import app from "./app";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,17 +15,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// async function main() {
+//   try {
+//     await mongoose.connect(config.database_url as string);
+//     console.log("Server is connected with the database");
+//     app.listen(config.port, () => {
+//       console.log("server is running.");
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+// main();
+const http_1 = require("http");
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("./config"));
-function server() {
+const app_1 = __importDefault(require("./app"));
+let server;
+const PORT = config_1.default.port;
+// async function main() {
+//   try {
+//     await mongoose.connect(config.database_url as string);
+//     console.log("Connected to MongoDB Using Mongoose!!");
+//     server = app.listen(PORT, () => {
+//       console.log(`App is listening on port ${PORT}`);
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+// main();
+function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield mongoose_1.default.connect(config_1.default.database_url);
-            console.log("Server is connected with the database");
+            console.log("✅ Connected to MongoDB using Mongoose!!");
+            // ✅ CHANGED: Only run this locally (not in Vercel)
+            (0, http_1.createServer)(app_1.default).listen(PORT, () => {
+                console.log(`🚀 Server is listening on port ${PORT}`);
+            });
         }
         catch (error) {
-            console.error(error);
+            console.error("❌ MongoDB connection error:", error);
         }
     });
 }
-server();
+// ✅ CHANGED: Only run main() in local/dev environment
+if (config_1.default.node_env !== "production") {
+    main();
+}
+// ✅ CHANGED: Export the Express app for Vercel
+exports.default = app_1.default;

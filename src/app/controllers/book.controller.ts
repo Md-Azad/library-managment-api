@@ -3,25 +3,6 @@ import { Book } from "../models/book.model";
 
 export const bookRoutes = express.Router();
 
-bookRoutes.post("/", async (req: Request, res: Response) => {
-  try {
-    const payload = req.body;
-    const data = await Book.create(payload);
-    res
-      .status(201)
-      .send({ success: true, message: "book created successfully", data });
-  } catch (error: any) {
-    res.status(400).send({
-      message: "book creation failed",
-      success: false,
-      error: {
-        name: error.name,
-        errors: error.errors,
-      },
-    });
-  }
-});
-
 bookRoutes.get("/", async (req: Request, res: Response) => {
   try {
     const { genre, sortBy, sort, limit } = req.query;
@@ -60,6 +41,26 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
     });
   }
 });
+
+bookRoutes.post("/", async (req: Request, res: Response) => {
+  try {
+    const payload = req.body;
+    const data = await Book.create(payload);
+    res
+      .status(201)
+      .send({ success: true, message: "book created successfully", data });
+  } catch (error: any) {
+    res.status(400).send({
+      message: "book creation failed",
+      success: false,
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+});
+
 bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
   try {
     const bookId = req.params?.bookId;
@@ -108,7 +109,7 @@ bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
     const bookId = req.params?.bookId;
 
     const data = await Book.findByIdAndDelete(bookId);
-    console.log(data);
+
     res.status(200).send({
       success: true,
       message: "book deleted successfully",

@@ -59,7 +59,6 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
       data,
     });
   } catch (error: any) {
-    console.log(error);
     res.status(400).send({
       message: "book borrowing failed",
       success: false,
@@ -106,7 +105,6 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
       data: borroedBook,
     });
   } catch (error: any) {
-    console.log(error);
     res.status(400).send({
       message: "book borrowing failed",
       success: false,
