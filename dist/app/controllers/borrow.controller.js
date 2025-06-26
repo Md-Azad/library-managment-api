@@ -63,7 +63,6 @@ exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
     catch (error) {
-        console.log(error);
         res.status(400).send({
             message: "book borrowing failed",
             success: false,
@@ -110,7 +109,6 @@ exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     catch (error) {
-        console.log(error);
         res.status(400).send({
             message: "book borrowing failed",
             success: false,

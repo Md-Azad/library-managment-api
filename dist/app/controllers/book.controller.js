@@ -16,25 +16,6 @@ exports.bookRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
 exports.bookRoutes = express_1.default.Router();
-exports.bookRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const payload = req.body;
-        const data = yield book_model_1.Book.create(payload);
-        res
-            .status(201)
-            .send({ success: true, message: "book created successfully", data });
-    }
-    catch (error) {
-        res.status(400).send({
-            message: "book creation failed",
-            success: false,
-            error: {
-                name: error.name,
-                errors: error.errors,
-            },
-        });
-    }
-}));
 exports.bookRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { genre, sortBy, sort, limit } = req.query;
@@ -58,6 +39,25 @@ exports.bookRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, func
             message: "book fetched successfully",
             data,
         });
+    }
+    catch (error) {
+        res.status(400).send({
+            message: "book creation failed",
+            success: false,
+            error: {
+                name: error.name,
+                errors: error.errors,
+            },
+        });
+    }
+}));
+exports.bookRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const payload = req.body;
+        const data = yield book_model_1.Book.create(payload);
+        res
+            .status(201)
+            .send({ success: true, message: "book created successfully", data });
     }
     catch (error) {
         res.status(400).send({
@@ -119,7 +119,6 @@ exports.bookRoutes.delete("/:bookId", (req, res) => __awaiter(void 0, void 0, vo
     try {
         const bookId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.bookId;
         const data = yield book_model_1.Book.findByIdAndDelete(bookId);
-        console.log(data);
         res.status(200).send({
             success: true,
             message: "book deleted successfully",

@@ -32,7 +32,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).send({
-      message: "book creation failed",
+      message: "book fetcheing failed",
       success: false,
       error: {
         name: error.name,
