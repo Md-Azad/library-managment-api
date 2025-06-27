@@ -1,6 +1,6 @@
 import { createServer } from "http";
-import mongoose from "mongoose";
 import config from "./config";
+import mongoose from "mongoose";
 import app from "./app";
 
 const PORT = config.port || 5000;
@@ -18,10 +18,11 @@ async function main() {
     console.error("❌ MongoDB connection error:", error);
   }
 }
+main();
 // ✅ CHANGED: Only run main() in local/dev environment
-if (config.node_env !== "production") {
-  main();
-}
+// if (config.node_env !== "production") {
+//   main();
+// }
 
-// ✅ CHANGED: Export the Express app for Vercel
-export default app;
+// // ✅ CHANGED: Export the Express app for Vercel
+// export default app;

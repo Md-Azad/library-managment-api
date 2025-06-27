@@ -35,6 +35,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
       message: "book fetcheing failed",
       success: false,
       error: {
+        message: error.message,
         name: error.name,
         errors: error.errors,
       },
@@ -65,6 +66,13 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
   try {
     const bookId = req.params?.bookId;
     const data = await Book.findById(bookId);
+    if (!data) {
+      res.status(200).send({
+        success: true,
+        message: "book did not found",
+        data,
+      });
+    }
 
     res.status(200).send({
       success: true,
@@ -73,7 +81,7 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).send({
-      message: "book did not found",
+      message: "something went wrong during finding a book",
       success: false,
       error: {
         name: error.name,

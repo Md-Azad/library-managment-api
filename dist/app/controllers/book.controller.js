@@ -45,6 +45,7 @@ exports.bookRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, func
             message: "book fetcheing failed",
             success: false,
             error: {
+                message: error.message,
                 name: error.name,
                 errors: error.errors,
             },

@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = require("http");
-const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("./config"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
-const PORT = config_1.default.port;
+const PORT = config_1.default.port || 5000;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -32,9 +32,10 @@ function main() {
         }
     });
 }
+main();
 // ✅ CHANGED: Only run main() in local/dev environment
-if (config_1.default.node_env !== "production") {
-    main();
-}
-// ✅ CHANGED: Export the Express app for Vercel
-exports.default = app_1.default;
+// if (config.node_env !== "production") {
+//   main();
+// }
+// // ✅ CHANGED: Export the Express app for Vercel
+// export default app;
