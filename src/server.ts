@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import config from "./config";
 import app from "./app";
 
-const PORT = config.port;
+const PORT = config.port || 5000;
 
 async function main() {
   try {

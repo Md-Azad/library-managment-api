@@ -42,7 +42,7 @@ exports.bookRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (error) {
         res.status(400).send({
-            message: "book creation failed",
+            message: "book fetcheing failed",
             success: false,
             error: {
                 name: error.name,
