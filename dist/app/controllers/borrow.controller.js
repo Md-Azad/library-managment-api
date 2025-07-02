@@ -16,10 +16,12 @@ exports.borrowRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
 const borrow_model_1 = require("../models/borrow.model");
+const mongodb_1 = require("mongodb");
 exports.borrowRoutes = express_1.default.Router();
-exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.borrowRoutes.post("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { book, quantity, dueDate } = req === null || req === void 0 ? void 0 : req.body;
+        const book = req.params.id;
+        const { quantity, dueDate } = req === null || req === void 0 ? void 0 : req.body;
         const borrowBook = yield book_model_1.Book.findById(book);
         if (!borrowBook) {
             res.status(400).json({
@@ -47,9 +49,14 @@ exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, f
             });
             return;
         }
-        const data = yield borrow_model_1.Borrow.create(req.body);
+        const payload = {
+            book: new mongodb_1.ObjectId(book),
+            quantity,
+            dueDate,
+        };
+        const data = yield borrow_model_1.Borrow.create(payload);
         if (data) {
-            const status = yield book_model_1.Book.updateAvilableityMethod(book);
+            const status = yield book_model_1.Book.updateAvilableityMethod(new mongodb_1.ObjectId(book));
             if (!status) {
                 yield book_model_1.Book.findByIdAndUpdate(book, { avilable: status }, {
                     new: true,
