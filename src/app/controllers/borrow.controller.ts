@@ -1,12 +1,16 @@
 import express, { Request, Response } from "express";
 import { Book } from "../models/book.model";
 import { Borrow } from "../models/borrow.model";
+import { ObjectId } from "mongodb";
+import { IBorrow } from "../interfaces/borrow.interface";
 
 export const borrowRoutes = express.Router();
 
-borrowRoutes.post("/", async (req: Request, res: Response) => {
+borrowRoutes.post("/:id", async (req: Request, res: Response) => {
   try {
-    const { book, quantity, dueDate } = req?.body;
+    const book = req.params.id;
+
+    const { quantity, dueDate } = req?.body;
 
     const borrowBook = await Book.findById(book);
     if (!borrowBook) {
@@ -38,10 +42,16 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
       return;
     }
 
-    const data = await Borrow.create(req.body);
+    const payload: IBorrow = {
+      book: new ObjectId(book),
+      quantity,
+      dueDate,
+    };
+
+    const data = await Borrow.create(payload);
 
     if (data) {
-      const status = await Book.updateAvilableityMethod(book);
+      const status = await Book.updateAvilableityMethod(new ObjectId(book));
       if (!status) {
         await Book.findByIdAndUpdate(
           book,

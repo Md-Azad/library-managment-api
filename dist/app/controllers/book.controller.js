@@ -76,6 +76,13 @@ exports.bookRoutes.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 
     try {
         const bookId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.bookId;
         const data = yield book_model_1.Book.findById(bookId);
+        if (!data) {
+            res.status(200).send({
+                success: false,
+                message: "book did not found",
+                data,
+            });
+        }
         res.status(200).send({
             success: true,
             message: "book found successfully",
@@ -84,7 +91,7 @@ exports.bookRoutes.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 
     }
     catch (error) {
         res.status(400).send({
-            message: "book did not found",
+            message: "something went wrong during finding a book",
             success: false,
             error: {
                 name: error.name,
