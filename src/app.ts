@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "https://library-management-frontend-mu.vercel.app",
-      "http://localhost:8000",
+      "http://localhost:5173",
     ],
   })
 );
