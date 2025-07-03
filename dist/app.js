@@ -11,7 +11,7 @@ const borrow_controller_1 = require("./app/controllers/borrow.controller");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: [
-        "https://library-management-frontend-mu.vercel.app",
+        "https://library-management-frontend-livid.vercel.app",
         "http://localhost:5173",
     ],
 }));

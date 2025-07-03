@@ -9,7 +9,7 @@ const app: Application = express();
 app.use(
   cors({
     origin: [
-      "https://library-management-frontend-mu.vercel.app",
+      "https://library-management-frontend-livid.vercel.app",
       "http://localhost:5173",
     ],
   })

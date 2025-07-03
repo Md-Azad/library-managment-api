@@ -104,6 +104,9 @@ exports.bookRoutes.patch("/:bookId", (req, res) => __awaiter(void 0, void 0, voi
     var _a;
     try {
         const bookId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.bookId;
+        if (req.body.copies > 0) {
+            req.body["avilable"] = true;
+        }
         const data = yield book_model_1.Book.findByIdAndUpdate(bookId, req.body, { new: true });
         res.status(200).send({
             success: true,
