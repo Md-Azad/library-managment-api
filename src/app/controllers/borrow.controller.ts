@@ -80,7 +80,7 @@ borrowRoutes.post("/:id", async (req: Request, res: Response) => {
   }
 });
 
-borrowRoutes.get("/", async (req: Request, res: Response) => {
+borrowRoutes.get("/borrow-summary", async (req: Request, res: Response) => {
   try {
     const borroedBook = await Borrow.aggregate([
       {
