@@ -94,6 +94,9 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
 bookRoutes.patch("/:bookId", async (req: Request, res: Response) => {
   try {
     const bookId = req.params?.bookId;
+    if (req.body.copies > 0) {
+      req.body["avilable"] = true;
+    }
 
     const data = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
     res.status(200).send({
