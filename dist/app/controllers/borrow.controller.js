@@ -80,7 +80,7 @@ exports.borrowRoutes.post("/:id", (req, res) => __awaiter(void 0, void 0, void 0
         });
     }
 }));
-exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.borrowRoutes.get("/borrow-summary", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const borroedBook = yield borrow_model_1.Borrow.aggregate([
             {
