@@ -3,16 +3,18 @@ import config from "./config";
 import mongoose from "mongoose";
 import app from "./app";
 
-const PORT = config.port || 5000;
+const PORT = config.port || 5001;
 
 async function main() {
   try {
     await mongoose.connect(config.database_url as string);
+
     console.log("✅ Connected to MongoDB using Mongoose!!");
 
     // ✅ CHANGED: Only run this locally (not in Vercel)
     createServer(app).listen(PORT, () => {
       console.log(`🚀 Server is listening on port ${PORT}`);
+      console.log(config.database_url);
     });
   } catch (error) {
     console.error("❌ MongoDB connection error:", error);
